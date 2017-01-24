@@ -1,0 +1,577 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DataModelStoreContainer">
+    <EntitySet Name="ProductoSet" EntityType="DataModel.Store.ProductoSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BodegaSet" EntityType="DataModel.Store.BodegaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InventarioSet" EntityType="DataModel.Store.InventarioSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ComponenteSet" EntityType="DataModel.Store.ComponenteSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CategoriaSet" EntityType="DataModel.Store.CategoriaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProveedorSet" EntityType="DataModel.Store.ProveedorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductoBodega" EntityType="DataModel.Store.ProductoBodega" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductoComponente" EntityType="DataModel.Store.ProductoComponente" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ProductoBodega_Bodega" Association="DataModel.Store.FK_ProductoBodega_Bodega">
+      <End Role="Bodega" EntitySet="BodegaSet" />
+      <End Role="ProductoBodega" EntitySet="ProductoBodega" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductoBodega_Producto" Association="DataModel.Store.FK_ProductoBodega_Producto">
+      <End Role="Producto" EntitySet="ProductoSet" />
+      <End Role="ProductoBodega" EntitySet="ProductoBodega" />
+    </AssociationSet>
+    <AssociationSet Name="ProductoCategoria" Association="DataModel.Store.ProductoCategoria">
+      <End Role="Producto" EntitySet="ProductoSet" />
+      <End Role="Categoria" EntitySet="CategoriaSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductoComponente_Producto" Association="DataModel.Store.FK_ProductoComponente_Producto">
+      <End Role="Producto" EntitySet="ProductoSet" />
+      <End Role="ProductoComponente" EntitySet="ProductoComponente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductoComponente_Componente" Association="DataModel.Store.FK_ProductoComponente_Componente">
+      <End Role="Componente" EntitySet="ComponenteSet" />
+      <End Role="ProductoComponente" EntitySet="ProductoComponente" />
+    </AssociationSet>
+    <AssociationSet Name="BodegaInventario" Association="DataModel.Store.BodegaInventario">
+      <End Role="Bodega" EntitySet="BodegaSet" />
+      <End Role="Inventario" EntitySet="InventarioSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductoInventario" Association="DataModel.Store.ProductoInventario">
+      <End Role="Producto" EntitySet="ProductoSet" />
+      <End Role="Inventario" EntitySet="InventarioSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductoProveedor" Association="DataModel.Store.ProductoProveedor">
+      <End Role="Producto" EntitySet="ProductoSet" />
+      <End Role="Proveedor" EntitySet="ProveedorSet" />
+    </AssociationSet>
+    <AssociationSet Name="ComponenteProveedor" Association="DataModel.Store.ComponenteProveedor">
+      <End Role="Componente" EntitySet="ComponenteSet" />
+      <End Role="Proveedor" EntitySet="ProveedorSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ProductoSet">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Imagen" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Precio" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Categoria_IdCategoria" Type="int" Nullable="false" />
+    <Property Name="Inventario_IdProducto" Type="int" Nullable="false" />
+    <Property Name="Inventario_IdBodega" Type="int" Nullable="false" />
+    <Property Name="Proveedor_IdProveedor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BodegaSet">
+    <Key>
+      <PropertyRef Name="IdBodega" />
+    </Key>
+    <Property Name="IdBodega" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Ubicacion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Inventario_IdProducto" Type="int" Nullable="false" />
+    <Property Name="Inventario_IdBodega" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InventarioSet">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+      <PropertyRef Name="IdBodega" />
+    </Key>
+    <Property Name="IdProducto" Type="int" Nullable="false" />
+    <Property Name="IdBodega" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="ComponenteSet">
+    <Key>
+      <PropertyRef Name="IdComponente" />
+    </Key>
+    <Property Name="IdComponente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PrecioUnitario" Type="decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Proveedor_IdProveedor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoriaSet">
+    <Key>
+      <PropertyRef Name="IdCategoria" />
+    </Key>
+    <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Imagen" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProveedorSet">
+    <Key>
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="IdProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Apellido" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Telefono" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductoBodega">
+    <Key>
+      <PropertyRef Name="BodegaSet_IdBodega" />
+      <PropertyRef Name="ProductoSet_IdProducto" />
+    </Key>
+    <Property Name="BodegaSet_IdBodega" Type="int" Nullable="false" />
+    <Property Name="ProductoSet_IdProducto" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductoComponente">
+    <Key>
+      <PropertyRef Name="Producto_IdProducto" />
+      <PropertyRef Name="Componente_IdComponente" />
+    </Key>
+    <Property Name="Producto_IdProducto" Type="int" Nullable="false" />
+    <Property Name="Componente_IdComponente" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ProductoCategoria">
+    <End Role="Producto" Type="DataModel.Store.ProductoSet" Multiplicity="*" />
+    <End Role="Categoria" Type="DataModel.Store.CategoriaSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="IdCategoria" />
+      </Principal>
+      <Dependent Role="Producto">
+        <PropertyRef Name="Categoria_IdCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BodegaInventario">
+    <End Role="Bodega" Type="DataModel.Store.BodegaSet" Multiplicity="*" />
+    <End Role="Inventario" Type="DataModel.Store.InventarioSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="IdProducto" />
+        <PropertyRef Name="IdBodega" />
+      </Principal>
+      <Dependent Role="Bodega">
+        <PropertyRef Name="Inventario_IdProducto" />
+        <PropertyRef Name="Inventario_IdBodega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductoInventario">
+    <End Role="Producto" Type="DataModel.Store.ProductoSet" Multiplicity="*" />
+    <End Role="Inventario" Type="DataModel.Store.InventarioSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="IdProducto" />
+        <PropertyRef Name="IdBodega" />
+      </Principal>
+      <Dependent Role="Producto">
+        <PropertyRef Name="Inventario_IdProducto" />
+        <PropertyRef Name="Inventario_IdBodega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductoProveedor">
+    <End Role="Producto" Type="DataModel.Store.ProductoSet" Multiplicity="*" />
+    <End Role="Proveedor" Type="DataModel.Store.ProveedorSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="Producto">
+        <PropertyRef Name="Proveedor_IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ComponenteProveedor">
+    <End Role="Componente" Type="DataModel.Store.ComponenteSet" Multiplicity="*" />
+    <End Role="Proveedor" Type="DataModel.Store.ProveedorSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="Componente">
+        <PropertyRef Name="Proveedor_IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductoBodega_Bodega">
+    <End Role="Bodega" Type="DataModel.Store.BodegaSet" Multiplicity="1" />
+    <End Role="ProductoBodega" Type="DataModel.Store.ProductoBodega" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bodega">
+        <PropertyRef Name="IdBodega" />
+      </Principal>
+      <Dependent Role="ProductoBodega">
+        <PropertyRef Name="BodegaSet_IdBodega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductoBodega_Producto">
+    <End Role="ProductoBodega" Type="DataModel.Store.ProductoBodega" Multiplicity="*" />
+    <End Role="Producto" Type="DataModel.Store.ProductoSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="ProductoBodega">
+        <PropertyRef Name="ProductoSet_IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductoComponente_Producto">
+    <End Role="Producto" Type="DataModel.Store.ProductoSet" Multiplicity="1" />
+    <End Role="ProductoComponente" Type="DataModel.Store.ProductoComponente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="ProductoComponente">
+        <PropertyRef Name="Producto_IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductoComponente_Componente">
+    <End Role="ProductoComponente" Type="DataModel.Store.ProductoComponente" Multiplicity="*" />
+    <End Role="Componente" Type="DataModel.Store.ComponenteSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Componente">
+        <PropertyRef Name="IdComponente" />
+      </Principal>
+      <Dependent Role="ProductoComponente">
+        <PropertyRef Name="Componente_IdComponente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProductoSet" EntityType="DataModel.Producto" />
+          <EntitySet Name="BodegaSet" EntityType="DataModel.Bodega" />
+          <AssociationSet Name="ProductoBodega" Association="DataModel.ProductoBodega">
+            <End Role="Bodega" EntitySet="BodegaSet" />
+            <End Role="Producto" EntitySet="ProductoSet" />
+          </AssociationSet>
+          <EntitySet Name="InventarioSet" EntityType="DataModel.Inventario" />
+          <EntitySet Name="ComponenteSet" EntityType="DataModel.Componente" />
+          <EntitySet Name="CategoriaSet" EntityType="DataModel.Categoria" />
+          <AssociationSet Name="ProductoCategoria" Association="DataModel.ProductoCategoria">
+            <End Role="Producto" EntitySet="ProductoSet" />
+            <End Role="Categoria" EntitySet="CategoriaSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductoComponente" Association="DataModel.ProductoComponente">
+            <End Role="Producto" EntitySet="ProductoSet" />
+            <End Role="Componente" EntitySet="ComponenteSet" />
+          </AssociationSet>
+          <EntitySet Name="ProveedorSet" EntityType="DataModel.Proveedor" />
+          <AssociationSet Name="BodegaInventario" Association="DataModel.BodegaInventario">
+            <End Role="Bodega" EntitySet="BodegaSet" />
+            <End Role="Inventario" EntitySet="InventarioSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductoInventario" Association="DataModel.ProductoInventario">
+            <End EntitySet="ProductoSet" Role="Producto" />
+            <End EntitySet="InventarioSet" Role="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="ProductoProveedor" Association="DataModel.ProductoProveedor">
+            <End Role="Producto" EntitySet="ProductoSet" />
+            <End Role="Proveedor" EntitySet="ProveedorSet" />
+          </AssociationSet>
+          <AssociationSet Name="ComponenteProveedor" Association="DataModel.ComponenteProveedor">
+            <End Role="Componente" EntitySet="ComponenteSet" />
+            <End Role="Proveedor" EntitySet="ProveedorSet" />
+          </AssociationSet>
+          <EntitySet Name="HistorialSet" EntityType="DataModel.Historial" />
+          <EntitySet Name="ClienteSet" EntityType="DataModel.Cliente" />
+          <EntitySet Name="FacturaSet" EntityType="DataModel.Factura" />
+          <AssociationSet Name="FacturaCliente" Association="DataModel.FacturaCliente">
+            <End Role="Factura" EntitySet="FacturaSet" />
+            <End Role="Cliente" EntitySet="ClienteSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductoFactura" Association="DataModel.ProductoFactura">
+            <End Role="Producto" EntitySet="ProductoSet" />
+            <End Role="Factura" EntitySet="FacturaSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Imagen" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="BodegaSet" Relationship="DataModel.ProductoBodega" FromRole="Producto" ToRole="Bodega" />
+          <NavigationProperty Name="Categoria" Relationship="DataModel.ProductoCategoria" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="Componente" Relationship="DataModel.ProductoComponente" FromRole="Producto" ToRole="Componente" />
+          <NavigationProperty Name="Inventario" Relationship="DataModel.ProductoInventario" FromRole="Producto" ToRole="Inventario" />
+          <NavigationProperty Name="Proveedor" Relationship="DataModel.ProductoProveedor" FromRole="Producto" ToRole="Proveedor" />
+          <NavigationProperty Name="Factura" Relationship="DataModel.ProductoFactura" FromRole="Producto" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="Bodega">
+          <Key>
+            <PropertyRef Name="IdBodega" />
+          </Key>
+          <Property Name="IdBodega" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Ubicacion" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="ProductoSet" Relationship="DataModel.ProductoBodega" FromRole="Bodega" ToRole="Producto" />
+          <NavigationProperty Name="Inventario" Relationship="DataModel.BodegaInventario" FromRole="Bodega" ToRole="Inventario" />
+        </EntityType>
+        <Association Name="ProductoBodega">
+          <End Type="DataModel.Bodega" Role="Bodega" Multiplicity="*" />
+          <End Type="DataModel.Producto" Role="Producto" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Inventario" >
+          <Key>
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdBodega" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Bodega" Relationship="DataModel.BodegaInventario" FromRole="Inventario" ToRole="Bodega" />
+          <NavigationProperty Name="Producto" Relationship="DataModel.ProductoInventario" FromRole="Inventario" ToRole="Producto" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Componente">
+          <Key>
+            <PropertyRef Name="IdComponente" />
+          </Key>
+          <Property Name="IdComponente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Producto" Relationship="DataModel.ProductoComponente" FromRole="Componente" ToRole="Producto" />
+          <NavigationProperty Name="Proveedor" Relationship="DataModel.ComponenteProveedor" FromRole="Componente" ToRole="Proveedor" />
+          <Property Name="PrecioMetro" Type="Decimal" Nullable="false" annotation:StoreGeneratedPattern="None" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Imagen" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Producto" Relationship="DataModel.ProductoCategoria" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <Association Name="ProductoCategoria">
+          <End Type="DataModel.Producto" Role="Producto" Multiplicity="*" />
+          <End Type="DataModel.Categoria" Role="Categoria" Multiplicity="1" />
+        </Association>
+        <Association Name="ProductoComponente">
+          <End Type="DataModel.Producto" Role="Producto" Multiplicity="*" />
+          <End Type="DataModel.Componente" Role="Componente" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Ciudad" Type="String" Nullable="false" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Producto" Relationship="DataModel.ProductoProveedor" FromRole="Proveedor" ToRole="Producto" />
+          <NavigationProperty Name="Componente" Relationship="DataModel.ComponenteProveedor" FromRole="Proveedor" ToRole="Componente" />
+          <Property Name="Correo" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="BodegaInventario">
+          <End Type="DataModel.Bodega" Role="Bodega" Multiplicity="1" />
+          <End Type="DataModel.Inventario" Role="Inventario" Multiplicity="1" />
+        </Association>
+        <Association Name="ProductoInventario">
+          <End Type="DataModel.Producto" Multiplicity="*" Role="Producto" />
+          <End Type="DataModel.Inventario" Multiplicity="1" Role="Inventario" />
+        </Association>
+        <Association Name="ProductoProveedor">
+          <End Type="DataModel.Producto" Role="Producto" Multiplicity="*" />
+          <End Type="DataModel.Proveedor" Role="Proveedor" Multiplicity="1" />
+        </Association>
+        <Association Name="ComponenteProveedor">
+          <End Type="DataModel.Componente" Role="Componente" Multiplicity="*" />
+          <End Type="DataModel.Proveedor" Role="Proveedor" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Historial">
+          <Key>
+            <PropertyRef Name="IdHistorial" />
+          </Key>
+          <Property Name="IdHistorial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" />
+          <Property Name="Ciudad" Type="String" Nullable="false" />
+          <Property Name="Correo" Type="String" Nullable="false" />
+          <Property Name="Telefono" Type="String" Nullable="false" />
+          <Property Name="Giro" Type="String" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="DataModel.FacturaCliente" FromRole="Cliente" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Cliente" Relationship="DataModel.FacturaCliente" FromRole="Factura" ToRole="Cliente" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="DataModel.ProductoFactura" FromRole="Factura" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FacturaCliente">
+          <End Type="DataModel.Factura" Role="Factura" Multiplicity="1" />
+          <End Type="DataModel.Cliente" Role="Cliente" Multiplicity="1" />
+        </Association>
+        <Association Name="ProductoFactura">
+          <End Type="DataModel.Producto" Role="Producto" Multiplicity="*" />
+          <End Type="DataModel.Factura" Role="Factura" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="DataModelContainer">
+    <EntitySetMapping Name="ProductoSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Producto)">
+        <MappingFragment StoreEntitySet="ProductoSet">
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BodegaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Bodega)">
+        <MappingFragment StoreEntitySet="BodegaSet">
+          <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InventarioSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Inventario)">
+        <MappingFragment StoreEntitySet="InventarioSet">
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComponenteSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Componente)">
+        <MappingFragment StoreEntitySet="ComponenteSet">
+          <ScalarProperty Name="IdComponente" ColumnName="IdComponente" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoriaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Categoria)">
+        <MappingFragment StoreEntitySet="CategoriaSet">
+          <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProveedorSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Proveedor)">
+        <MappingFragment StoreEntitySet="ProveedorSet">
+          <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ProductoBodega" TypeName="DataModel.ProductoBodega" StoreEntitySet="ProductoBodega">
+      <EndProperty Name="Bodega">
+        <ScalarProperty Name="IdBodega" ColumnName="BodegaSet_IdBodega" />
+      </EndProperty>
+      <EndProperty Name="Producto">
+        <ScalarProperty Name="IdProducto" ColumnName="ProductoSet_IdProducto" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductoCategoria" TypeName="DataModel.ProductoCategoria" StoreEntitySet="ProductoSet">
+      <EndProperty Name="Categoria">
+        <ScalarProperty Name="IdCategoria" ColumnName="Categoria_IdCategoria" />
+      </EndProperty>
+      <EndProperty Name="Producto">
+        <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductoComponente" TypeName="DataModel.ProductoComponente" StoreEntitySet="ProductoComponente">
+      <EndProperty Name="Producto">
+        <ScalarProperty Name="IdProducto" ColumnName="Producto_IdProducto" />
+      </EndProperty>
+      <EndProperty Name="Componente">
+        <ScalarProperty Name="IdComponente" ColumnName="Componente_IdComponente" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BodegaInventario" TypeName="DataModel.BodegaInventario" StoreEntitySet="BodegaSet">
+      <EndProperty Name="Inventario">
+        <ScalarProperty Name="IdProducto" ColumnName="Inventario_IdProducto" />
+        <ScalarProperty Name="IdBodega" ColumnName="Inventario_IdBodega" />
+      </EndProperty>
+      <EndProperty Name="Bodega">
+        <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductoInventario" TypeName="DataModel.ProductoInventario" StoreEntitySet="ProductoSet">
+      <EndProperty Name="Inventario">
+        <ScalarProperty Name="IdProducto" ColumnName="Inventario_IdProducto" />
+        <ScalarProperty Name="IdBodega" ColumnName="Inventario_IdBodega" />
+      </EndProperty>
+      <EndProperty Name="Producto">
+        <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductoProveedor" TypeName="DataModel.ProductoProveedor" StoreEntitySet="ProductoSet">
+      <EndProperty Name="Proveedor">
+        <ScalarProperty Name="IdProveedor" ColumnName="Proveedor_IdProveedor" />
+      </EndProperty>
+      <EndProperty Name="Producto">
+        <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ComponenteProveedor" TypeName="DataModel.ComponenteProveedor" StoreEntitySet="ComponenteSet">
+      <EndProperty Name="Proveedor">
+        <ScalarProperty Name="IdProveedor" ColumnName="Proveedor_IdProveedor" />
+      </EndProperty>
+      <EndProperty Name="Componente">
+        <ScalarProperty Name="IdComponente" ColumnName="IdComponente" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

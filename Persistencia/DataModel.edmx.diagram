@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="de7816f7a3e241e3aa9ae11d048632df" Name="Diagram1" ZoomLevel="79" >
+        <EntityTypeShape EntityType="DataModel.Producto" Width="1.5" PointX="1.875" PointY="0.75" FillColor="DarkRed" />
+        <EntityTypeShape EntityType="DataModel.Bodega" Width="1.5" PointX="4.5" PointY="0.5" />
+        <AssociationConnector Association="DataModel.ProductoBodega" />
+        <EntityTypeShape EntityType="DataModel.Inventario" Width="1.5" PointX="6.75" PointY="0.875" />
+        <EntityTypeShape EntityType="DataModel.Componente" Width="1.5" PointX="4.75" PointY="4.5" />
+        <EntityTypeShape EntityType="DataModel.Categoria" Width="1.5" PointX="0.5" PointY="4.5" />
+        <AssociationConnector Association="DataModel.ProductoCategoria" />
+        <AssociationConnector Association="DataModel.ProductoComponente" />
+        <EntityTypeShape EntityType="DataModel.Proveedor" Width="1.5" PointX="2.5" PointY="4.5" />
+        <AssociationConnector Association="DataModel.BodegaInventario" />
+        <AssociationConnector Association="DataModel.ProductoInventario" />
+        <AssociationConnector Association="DataModel.ProductoProveedor" />
+        <AssociationConnector Association="DataModel.ComponenteProveedor" />
+        <EntityTypeShape EntityType="DataModel.Historial" Width="1.5" PointX="9.625" PointY="2.5" />
+        <EntityTypeShape EntityType="DataModel.Cliente" Width="1.5" PointX="9.375" PointY="4.25" />
+        <EntityTypeShape EntityType="DataModel.Factura" Width="1.5" PointX="7.375" PointY="4.375" />
+        <AssociationConnector Association="DataModel.FacturaCliente" />
+        <AssociationConnector Association="DataModel.ProductoFactura" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
